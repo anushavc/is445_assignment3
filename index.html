@@ -1,0 +1,39 @@
+<!--Assignment 3 - Anusha Verma Chandraju-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Reference: https://vega.github.io/vega-lite/usage/embed.html -->
+<script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.16.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2"></script>
+</head>
+<title>Data Visualization Assignment</title>
+<body>
+  <h1 align="center">Data Visualization Assignment</h1>
+  <h2 align="center"> - Anusha Verma Chandraju</h2>
+  <div id="plot" align="center"></div>
+  <script>
+   var scatter = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json", // calling the vegalite renderer to use the 5th schema version
+  "width": 800,//setting width as 800
+  "height": 500,//setting width as 500
+  "data": {"url": "building_inventory.csv"},//calling the building inventory data 
+  "transform": [{ "aggregate": [{"op": "mean", "field": "Square Footage", "as": "asf"}],"groupby": ["Congress Dist"]}]//finding the mean of the square footage as a function on the congressional district
+  ,
+  "mark": {
+    "type": "bar",//creating a bar plot
+    "color": "purple" //setting the color of the bars as purple 
+  },
+  "encoding": {
+    "x": {"field": "Congress Dist", "type":"ordinal","title": "Congressional District", "sort": "y" }, //encoding the x-axis; here, we give the title of x and specify the type as nominal and sort in ascending order based on the square footage
+    "y": {"field": "asf", "type":"quantitative", "title": "Square Footage"},//encoding the y-axis; here, we give the title of y and specify the type as quantitative
+    "tooltip": {"field": "asf", "type": "quantitative"}//tooltip
+  },
+  "title": "Average square footage as a function of congressional district Plot",//setting the title of the plot
+};
+vegaEmbed("#plot", scatter);//renders visualiation
+  </script>
+  <p align="center"> The plot describes the average square footage as a function of congressional district. Here, we see that the congressional district 7 has the highest value whereas congressional district 14 has the lowest</p>
+</body>
+</html>
